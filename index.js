@@ -1,7 +1,7 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-var botbuilder_azure = require("botbuilder-azure");
-var builder_cognitiveservices = require("botbuilder-cognitiveservices");
+var botbuilder_azure = require('botbuilder-azure');
+var builder_cognitiveservices = require('botbuilder-cognitiveservices');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -20,7 +20,7 @@ var connector = new builder.ChatConnector({
 server.post('/api/messages', connector.listen());
 
 var tableName = 'botdata';
-var azureTableClient = new botbuilder_azure.AzureTableClient(tableName, process.env['AzureWebJobsStorage']);
+var azureTableClient = new botbuilder_azure.AzureTableClient(tableName, process.env.AzureWebJobsStorage);
 var tableStorage = new botbuilder_azure.AzureBotStorage({ gzipData: false }, azureTableClient);
 
 // Create your bot with a function to receive messages from the user
@@ -57,7 +57,7 @@ var basicQnAMakerDialog = new builder_cognitiveservices.QnAMakerDialog({
 
 bot.dialog('basicQnAMakerDialog', basicQnAMakerDialog);
 
-bot.dialog('/', //basicQnAMakerDialog);
+bot.dialog('/', // basicQnAMakerDialog);
     [
         function (session) {
             var qnaKnowledgebaseId = process.env.QnAKnowledgebaseId;
@@ -65,15 +65,14 @@ bot.dialog('/', //basicQnAMakerDialog);
             var endpointHostName = process.env.QnAEndpointHostName;
 
             // QnA Subscription Key and KnowledgeBase Id null verification
-            if ((qnaAuthKey == null || qnaAuthKey == '') || (qnaKnowledgebaseId == null || qnaKnowledgebaseId == ''))
-                session.send('Please set QnAKnowledgebaseId, QnAAuthKey and QnAEndpointHostName (if applicable) in App Settings. Learn how to get them at https://aka.ms/qnaabssetup.');
-            else {
-                if (endpointHostName == null || endpointHostName == '')
-                    // Replace with Preview QnAMakerDialog service
+            if ((qnaAuthKey == null || qnaAuthKey == '') || (qnaKnowledgebaseId == null || qnaKnowledgebaseId == '')) { session.send('Please set QnAKnowledgebaseId, QnAAuthKey and QnAEndpointHostName (if applicable) in App Settings. Learn how to get them at https://aka.ms/qnaabssetup.'); } else {
+                if (endpointHostName == null || endpointHostName == '') {
+                    // Replace with Preview QnAMakerDialog service 
                     session.replaceDialog('basicQnAMakerPreviewDialog');
-                else
-                    // Replace with GA QnAMakerDialog service
+                } else {
+                    // Replace with GA QnAMakerDialog service         
                     session.replaceDialog('basicQnAMakerDialog');
+                }
             }
         }
     ]);
