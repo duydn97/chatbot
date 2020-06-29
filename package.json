@@ -16,9 +16,11 @@
         "url": "https://github.com"
     },
     "dependencies": {
-        "botbuilder": "~4.9.1",
+        "botbuilder": "^3.13.1",
+        "botbuilder-azure": "^3.0.4",
+        "botbuilder-cognitiveservices": "^1.2.0",
         "dotenv": "^8.2.0",
-        "restify": "~8.5.1"
+        "restify": "^8.5.1"
     },
     "devDependencies": {
         "eslint": "^7.0.0",
